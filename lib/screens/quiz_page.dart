@@ -31,43 +31,39 @@ class _QuizPageState extends State<QuizPage> {
 
     if (currentQuestion.type == QuestionType.textField) {
       if (userAnswer == null || userAnswer!.trim().isEmpty) {
-        // Show error message if no answer is provided
-        showMessage('Veuillez entrer une réponse.');
+        showMessage('Veuillez entrer une réponse.', false);
         return;
       }
 
       final answer = userAnswer!.toLowerCase().trim();
       final correctAnswer = currentQuestion.correctAnswer.toLowerCase().trim();
-
       if (answer == correctAnswer) {
         isCorrect = true;
+        showMessage('Bonne réponse !', true);
+        moveToNextQuestion();
       } else {
         isCorrect = false;
-        // Show error message for incorrect answer
-        showMessage('Réponse incorrecte. Réessayez.');
-        return;
+        showMessage('Réponse incorrecte. Réessayez.', false);
       }
     } else if (currentQuestion.type == QuestionType.options) {
-      final selectedAnswer = currentQuestion.options.indexOf(userAnswer!);
-
-      if (selectedAnswer != -1) {
-        // Show error message for invalid answer selection
-        showMessage('Réponse invalide. Réessayez.');
+      if (userAnswer == null) {
+        showMessage('Veuillez choisir une réponse.', false);
         return;
       }
+
+      final selectedAnswer = currentQuestion.options.indexOf(userAnswer!);
 
       setState(() {
         isCorrect = selectedAnswer == 0;
       });
 
-      if (!isCorrect) {
-        // Show error message for incorrect answer
-        showMessage('Réponse incorrecte. Réessayez.');
-        return;
+      if (isCorrect) {
+        showMessage('Bonne réponse !', true);
+        moveToNextQuestion();
+      } else {
+        showMessage('Réponse incorrecte. Réessayez.', false);
       }
     }
-
-    moveToNextQuestion();
   }
 
   void moveToNextQuestion() {
@@ -83,10 +79,11 @@ class _QuizPageState extends State<QuizPage> {
     }
   }
 
-  void showMessage(String message) {
+  void showMessage(String message, bool isCorrectAnswer) {
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
         content: Text(message),
+        backgroundColor: isCorrectAnswer ? Colors.green : Colors.red,
       ),
     );
   }
