@@ -14,7 +14,7 @@ class TheAmazingRow extends StatelessWidget {
   final String label;
   final VoidCallback onDelete;
 
-  @override
+  @override 
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {

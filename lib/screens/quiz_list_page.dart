@@ -1,58 +1,56 @@
 import 'package:flutter/material.dart';
-import '../screens/quiz_page.dart';
 import '../widgets/quiz_question_widget.dart';
+import 'quiz_page.dart';
 
 class QuizListPage extends StatelessWidget {
-  const QuizListPage({Key? key});
+  const QuizListPage({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Quiz List'),
+        title: const Text('Liste des Questions'),
       ),
       body: ListView(
         children: [
           ListTile(
-            title: const Text('Questions à Répondre'),
-            subtitle: const Text(
-                'Testez vos connaissances en répondant aux différentes questions'),
+            title: const Text('Type 1'),
+            subtitle: const Text('Projet des Questions'),
             onTap: () {
               Navigator.push(
                 context,
                 MaterialPageRoute(
                   builder: (context) => QuizPage(
-                    quizTitle: 'Questions-Réponses',
-                    quizDescription:
-                        'Répondez correctement sans faire de commentaire.',
+                    quizTitle: 'Question á reponse',
+                    quizDescription: 'Quelle est la capitale de la france',
                     questions: [
                       Question(
                         type: QuestionType.textField,
-                        questionText: 'Quelle est la capitale de la France ?',
-                        correctAnswer: 'Paris',
-                        options: [],
+                        questionText: 'Quelle est la capitale de la france',
+                        correctAnswer: 'paris',
                       ),
                       Question(
                         type: QuestionType.textField,
-                        questionText: 'Qui a peint "La Joconde" ?',
-                        correctAnswer: 'Leonardo da Vinci',
-                        options: [],
+                        questionText: 'Quelle est la capitale de la guinée',
+                        correctAnswer: 'Conakry',
                       ),
                       Question(
                         type: QuestionType.textField,
-                        questionText:
-                            'Quelle est la planète la plus proche du soleil ?',
-                        correctAnswer: 'Mercure',
-                        options: [],
+                        questionText: 'Quelle est la capitale de l\'allemagne',
+                        correctAnswer: 'berlin',
                       ),
                       Question(
                         type: QuestionType.textField,
                         questionText:
-                            'Quelle est la formule chimique de l\'eau ?',
-                        correctAnswer: 'H2O',
-                        options: [],
+                            'Quel est le nom du président de la france',
+                        correctAnswer: 'Macron',
                       ),
-                      // Ajoutez d'autres questions ici
+                      Question(
+                        type: QuestionType.textField,
+                        questionText:
+                            'Quel est le nom du président de la guinée',
+                        correctAnswer: 'alpha condé',
+                      ),
                     ],
                   ),
                 ),
@@ -60,51 +58,60 @@ class QuizListPage extends StatelessWidget {
             },
           ),
           ListTile(
-            title: const Text('Questions à choix Multiple'),
-            subtitle: const Text(
-                'Testez vos connaissances en choisissant la bonne réponse'),
+            title: const Text('Type 2'),
+            subtitle: const Text('Question á choix multiple'),
             onTap: () {
               Navigator.push(
                 context,
                 MaterialPageRoute(
                   builder: (context) => QuizPage(
                     quizTitle: 'QCM',
-                    quizDescription: 'Choisissez une seule réponse',
+                    quizDescription: 'Choisir la Bonne Réponse',
                     questions: [
                       Question(
                         type: QuestionType.options,
-                        questionText:
-                            'Quelle est la formule chimique de l\'eau ?',
+                        questionText: 'Quelle est la formule de l\'eau',
                         correctAnswer: 'H2O',
-                        options: ['CH3', 'H2O', 'C2H6'],
-                      ),
-                      Question(
-                        type: QuestionType.options,
-                        questionText: 'Quelle est la capitale de la Guinée ?',
-                        correctAnswer: 'Conakry',
-                        options: ['Dakar', 'Accra', 'Conakry'],
-                      ),
-                      Question(
-                        type: QuestionType.options,
-                        questionText: 'Quel joueur a remporté 7 Ballon d\'Or ?',
-                        correctAnswer: 'Messi',
-                        options: ['Messi', 'Ronaldo', 'Benzema'],
+                        options: ['H2O', 'CO2', 'CH3'],
                       ),
                       Question(
                         type: QuestionType.options,
                         questionText:
-                            'Quel est le nom de l\'ancien Président de la Guinée ?',
-                        correctAnswer: 'Alpha Condé',
-                        options: ['Wade', 'Alpha Condé', 'Macron'],
+                            'Quelle est la planete la plus proche de la terre',
+                        correctAnswer: 'Mars',
+                        options: ['Mars', 'pluton', 'venus'],
                       ),
-                      // Ajoutez d'autres questions ici
+                      Question(
+                        type: QuestionType.options,
+                        questionText: 'Quel est la capitale de la belgique',
+                        correctAnswer: 'bruxelle',
+                        options: ['bern', 'paris', 'bruxelle'],
+                      ),
+                      Question(
+                        type: QuestionType.options,
+                        questionText:
+                            'Quelle instruction on utilise pour faire de l\'affichage en console en javascript',
+                        correctAnswer: 'console.log',
+                        options: ['echo', 'print', 'console.log'],
+                      ),
+                      Question(
+                        type: QuestionType.options,
+                        questionText:
+                            'Qel est le nom de l\'ex chanceliére de l\'allemagne',
+                        correctAnswer: 'angela merkel',
+                        options: [
+                          'angela merkel',
+                          'elisabeth born',
+                          'ursula von der leyen'
+                        ],
+                      ),
                     ],
                   ),
                 ),
               );
             },
           ),
-          // Ajoutez d'autres quiz ici
+          // Add more quizzes here
         ],
       ),
     );

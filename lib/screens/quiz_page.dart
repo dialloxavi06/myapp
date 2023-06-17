@@ -1,3 +1,5 @@
+// ignore_for_file: library_private_types_in_public_api
+
 import 'package:flutter/material.dart';
 import '../widgets/quiz_question_widget.dart';
 
@@ -14,77 +16,77 @@ class QuizPage extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  // ignore: library_private_types_in_public_api
   _QuizPageState createState() => _QuizPageState();
 }
 
 class _QuizPageState extends State<QuizPage> {
   int currentQuestionIndex = 0;
   String? userAnswer;
-  bool isCorrect = true;
+  bool isCorrect = false;
 
   bool get hasNextQuestion =>
       currentQuestionIndex < widget.questions.length - 1;
-
   void checkAnswer() {
     final currentQuestion = widget.questions[currentQuestionIndex];
 
     if (currentQuestion.type == QuestionType.textField) {
       if (userAnswer == null || userAnswer!.trim().isEmpty) {
-        showMessage('Veuillez entrer une réponse.', false);
+        // Show error message if no answer is provided
+        showMessage('Veuillez entrer une réponse.');
         return;
       }
 
       final answer = userAnswer!.toLowerCase().trim();
       final correctAnswer = currentQuestion.correctAnswer.toLowerCase().trim();
+
       if (answer == correctAnswer) {
         isCorrect = true;
-        showMessage('Bonne réponse !', true);
-        moveToNextQuestion();
       } else {
         isCorrect = false;
-        showMessage('Réponse incorrecte. Réessayez.', false);
+        // Show error message for incorrect answer
+        showMessage('Réponse incorrecte. Réessayez.');
+        return;
       }
     } else if (currentQuestion.type == QuestionType.options) {
       final selectedAnswer = currentQuestion.options.indexOf(userAnswer!);
 
+      if (selectedAnswer != -1) {
+        // Show error message for invalid answer selection
+        showMessage('Réponse invalide. Réessayez.');
+        return;
+      }
+
       setState(() {
-        isCorrect = selectedAnswer == -1 ? false : selectedAnswer == 0;
+        isCorrect = selectedAnswer == 0;
       });
 
-      if (isCorrect) {
-        showMessage('Bonne réponse !', true);
-
-        // moveToNextQuestion();
-      } else {
-        showMessage('Réponse incorrecte. Réessayez.', false);
+      if (!isCorrect) {
+        // Show error message for incorrect answer
+        showMessage('Réponse incorrecte. Réessayez.');
+        return;
       }
     }
+
+    moveToNextQuestion();
   }
 
   void moveToNextQuestion() {
-    setState(() {
-      if (isCorrect && currentQuestionIndex < widget.questions.length - 1) {
-        currentQuestionIndex++;
-      }
-      userAnswer = null;
-      isCorrect = false;
-    });
-  }
-
-  void navigateToNextQuestion() {
     if (hasNextQuestion) {
-      moveToNextQuestion();
+      setState(() {
+        currentQuestionIndex++;
+        userAnswer = null;
+        isCorrect = false;
+      });
     } else {
-      showMessage('Terminé.', true);
+      // All questions answered, return to initial screen
+      Navigator.popUntil(context, ModalRoute.withName('/'));
     }
   }
 
-  void showMessage(String message, bool isCorrectAnswer) {
+  void showMessage(String message) {
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
         content: Text(message),
-        backgroundColor: isCorrectAnswer ? Colors.green : Colors.red,
       ),
     );
   }
@@ -109,19 +111,14 @@ class _QuizPageState extends State<QuizPage> {
           for (final option in currentQuestion.options)
             ListTile(
               title: Text(option),
-              tileColor: option == userAnswer
-                  ? isCorrect
-                      ? Colors.green
-                      : Colors.red
-                  : null,
+              tileColor: option == userAnswer && isCorrect
+                  ? Colors.green
+                  : option == userAnswer && !isCorrect
+                      ? Colors.red
+                      : null,
               onTap: () {
                 setState(() {
                   userAnswer = option;
-                  if (option == currentQuestion.correctAnswer) {
-                    isCorrect = true;
-                  } else {
-                    isCorrect = false;
-                  }
                 });
               },
             ),
@@ -134,9 +131,6 @@ class _QuizPageState extends State<QuizPage> {
 
   @override
   Widget build(BuildContext context) {
-    if (currentQuestionIndex >= widget.questions.length) {
-      return Container();
-    }
     final currentQuestion = widget.questions[currentQuestionIndex];
 
     return Scaffold(
@@ -164,8 +158,15 @@ class _QuizPageState extends State<QuizPage> {
             buildQuestion(),
             const SizedBox(height: 16),
             ElevatedButton(
-              onPressed: userAnswer != null ? navigateToNextQuestion : null,
-              child: Text(hasNextQuestion ? 'Suivant' : 'Terminer'),
+              onPressed: userAnswer != null ? checkAnswer : null,
+              child: Text(hasNextQuestion ? 'Suivant' : 'Terminé'),
+            ),
+            const SizedBox(height: 16),
+            ElevatedButton(
+              onPressed: () {
+                Navigator.popUntil(context, ModalRoute.withName('/'));
+              },
+              child: const Text('Retour á l\'écran  Initial'),
             ),
           ],
         ),

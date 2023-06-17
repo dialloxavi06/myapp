@@ -4,15 +4,15 @@ enum QuestionType {
 }
 
 class Question {
-  final String questionText;
   final QuestionType type;
-  final List<String> options;
+  final String questionText;
   final String correctAnswer;
+  final List<String> options;
 
   Question({
-    required this.questionText,
     required this.type,
-    required this.options,
+    required this.questionText,
     required this.correctAnswer,
+    this.options = const [],
   });
 }

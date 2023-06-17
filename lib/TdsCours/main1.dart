@@ -1,8 +1,8 @@
 // ignore_for_file: avoid_print
 
 import 'package:flutter/material.dart';
-import 'package:myapp/pokemon.dart';
-import './pages.dart';
+import 'package:myapp/TdsCours/pokemon.dart';
+import 'pages.dart';
 import 'amazingRow.dart';
 import 'ecran.dart';
 
