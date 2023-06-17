@@ -26,6 +26,7 @@ class _QuizPageState extends State<QuizPage> {
 
   bool get hasNextQuestion =>
       currentQuestionIndex < widget.questions.length - 1;
+
   void checkAnswer() {
     final currentQuestion = widget.questions[currentQuestionIndex];
 
@@ -51,32 +52,27 @@ class _QuizPageState extends State<QuizPage> {
         return;
       }
 
-      final selectedAnswer = currentQuestion.options.indexOf(userAnswer!);
-
-      setState(() {
-        isCorrect = selectedAnswer == 0;
-      });
-
-      if (isCorrect) {
+      if (userAnswer == currentQuestion.correctAnswer) {
+        // La réponse de l'utilisateur est correcte
+        isCorrect = true;
         showMessage('Bonne réponse !', true);
         moveToNextQuestion();
       } else {
+        // La réponse de l'utilisateur est incorrecte
+        isCorrect = false;
         showMessage('Réponse incorrecte. Réessayez.', false);
       }
     }
   }
 
   void moveToNextQuestion() {
-    if (hasNextQuestion) {
-      setState(() {
+    setState(() {
+      if (isCorrect && currentQuestionIndex < widget.questions.length - 1) {
         currentQuestionIndex++;
-        userAnswer = null;
-        isCorrect = false;
-      });
-    } else {
-      // All questions answered, return to initial screen
-      Navigator.popUntil(context, ModalRoute.withName('/'));
-    }
+      }
+      userAnswer = "";
+      isCorrect = false;
+    });
   }
 
   void showMessage(String message, bool isCorrectAnswer) {

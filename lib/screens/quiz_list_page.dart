@@ -14,42 +14,58 @@ class QuizListPage extends StatelessWidget {
       body: ListView(
         children: [
           ListTile(
-            title: const Text('Type 1'),
-            subtitle: const Text('Projet des Questions'),
+            title: Container(
+              decoration: BoxDecoration(
+                border: Border.all(color: Colors.black),
+                borderRadius: BorderRadius.circular(10),
+              ),
+              child: const Center(
+                child: Text('Type 1'),
+              ),
+            ),
+            subtitle: Container(
+              decoration: BoxDecoration(
+                border: Border.all(color: Colors.black),
+                borderRadius: BorderRadius.circular(10),
+              ),
+              child: const Center(
+                child: Text('Répondre en un seul mot'),
+              ),
+            ),
             onTap: () {
               Navigator.push(
                 context,
                 MaterialPageRoute(
                   builder: (context) => QuizPage(
                     quizTitle: 'Question á reponse',
-                    quizDescription: 'Quelle est la capitale de la france',
+                    quizDescription: 'Quelle est la capitale de la France',
                     questions: [
                       Question(
                         type: QuestionType.textField,
-                        questionText: 'Quelle est la capitale de la france',
-                        correctAnswer: 'paris',
+                        questionText: 'Quelle est la capitale de la France',
+                        correctAnswer: 'Paris',
                       ),
                       Question(
                         type: QuestionType.textField,
-                        questionText: 'Quelle est la capitale de la guinée',
+                        questionText: 'Quelle est la capitale de la Guinée',
                         correctAnswer: 'Conakry',
                       ),
                       Question(
                         type: QuestionType.textField,
-                        questionText: 'Quelle est la capitale de l\'allemagne',
-                        correctAnswer: 'berlin',
+                        questionText: 'Quelle est la capitale de l\'Allemagne',
+                        correctAnswer: 'Berlin',
                       ),
                       Question(
                         type: QuestionType.textField,
                         questionText:
-                            'Quel est le nom du président de la france',
+                            'Quel est le nom du président de la France',
                         correctAnswer: 'Macron',
                       ),
                       Question(
                         type: QuestionType.textField,
                         questionText:
-                            'Quel est le nom du président de la guinée',
-                        correctAnswer: 'alpha condé',
+                            'Quel est le nom du président de la Guinée',
+                        correctAnswer: 'Alpha Condé',
                       ),
                     ],
                   ),
@@ -58,8 +74,24 @@ class QuizListPage extends StatelessWidget {
             },
           ),
           ListTile(
-            title: const Text('Type 2'),
-            subtitle: const Text('Question á choix multiple'),
+            title: Container(
+              decoration: BoxDecoration(
+                border: Border.all(color: Colors.black),
+                borderRadius: BorderRadius.circular(10),
+              ),
+              child: const Center(
+                child: Text('Type 2'),
+              ),
+            ),
+            subtitle: Container(
+              decoration: BoxDecoration(
+                border: Border.all(color: Colors.black),
+                borderRadius: BorderRadius.circular(10),
+              ),
+              child: const Center(
+                child: Text('Question á choix multiple'),
+              ),
+            ),
             onTap: () {
               Navigator.push(
                 context,
@@ -77,32 +109,32 @@ class QuizListPage extends StatelessWidget {
                       Question(
                         type: QuestionType.options,
                         questionText:
-                            'Quelle est la planete la plus proche de la terre',
+                            'Quelle est la planète la plus proche de la Terre',
                         correctAnswer: 'Mars',
-                        options: ['Mars', 'pluton', 'venus'],
+                        options: ['Mars', 'Pluton', 'Venus'],
                       ),
                       Question(
                         type: QuestionType.options,
-                        questionText: 'Quel est la capitale de la belgique',
-                        correctAnswer: 'bruxelle',
-                        options: ['bern', 'paris', 'bruxelle'],
+                        questionText: 'Quel est la capitale de la Belgique',
+                        correctAnswer: 'Bruxelles',
+                        options: ['Bern', 'Paris', 'Bruxelles'],
                       ),
                       Question(
                         type: QuestionType.options,
                         questionText:
-                            'Quelle instruction on utilise pour faire de l\'affichage en console en javascript',
+                            'Quelle instruction utilise-t-on pour faire de l\'affichage en console en JavaScript',
                         correctAnswer: 'console.log',
                         options: ['echo', 'print', 'console.log'],
                       ),
                       Question(
                         type: QuestionType.options,
                         questionText:
-                            'Qel est le nom de l\'ex chanceliére de l\'allemagne',
-                        correctAnswer: 'angela merkel',
+                            'Quel est le nom de l\'ex-chancelière de l\'Allemagne',
+                        correctAnswer: 'Angela Merkel',
                         options: [
-                          'angela merkel',
-                          'elisabeth born',
-                          'ursula von der leyen'
+                          'Angela Merkel',
+                          'Elisabeth Born',
+                          'Ursula von der Leyen'
                         ],
                       ),
                     ],
